@@ -129,11 +129,11 @@
 
 **로그인 화면**
 
-![스크린샷 2025-08-14 154752.png](C:\Users\PC\Pictures\Screenshots\스크린샷%202025-08-14%20154752.png)
+<img width="2559" height="1439" alt="Image" src="https://github.com/user-attachments/assets/e28c6397-19e8-436f-a250-a6d75ebac407" />
 
 **수강신청 화면**
 
-![스크린샷 2025-08-14 155409.png](C:\Users\PC\Pictures\Screenshots\스크린샷%202025-08-14%20155409.png)
+<img width="1681" height="947" alt="Image" src="https://github.com/user-attachments/assets/e45e4f7f-17c0-4da0-ba8a-b428f02ed9c6" />
 
 ## 🏛️ 아키텍처 개요
 
