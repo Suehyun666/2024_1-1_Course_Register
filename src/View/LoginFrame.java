@@ -1,29 +1,32 @@
-package View;
+package view;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import Constant.constant.login;
-import Control.Control;
+import constant.Constants.login;
+import control.Control;
 
 public class LoginFrame extends JFrame {
+	//version
     private static final long serialVersionUID = login.VERSION_NUM;
-
+    
+    //components
     private JLabel idLb, pwLb, image;
     private JPanel loginPanel, backPanel;
     private JTextField idField;
     private JPasswordField pwField;
     private JButton loginBtn;
     private ActionListener actionListener;
-
+    
+    //constructor
     public LoginFrame() {
+    	//attributes
         this.setSize(login.WIDTH, login.HEIGHT);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setTitle(login.TITLE);
-
         actionListener = new ActionHandler();
         
         // Login panel
@@ -95,9 +98,6 @@ public class LoginFrame extends JFrame {
         this.add(backPanel, BorderLayout.CENTER);
     }
 
-    public void LoginSuccess() throws HeadlessException {
-    }
-
     private class ActionHandler implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (e.getActionCommand().equals(login.BT)) {
@@ -110,7 +110,7 @@ public class LoginFrame extends JFrame {
                     JOptionPane.showMessageDialog(null, "로그인 성공", login.SUCCESS_MESSAGE, JOptionPane.INFORMATION_MESSAGE);
                     ctrl.setUserId(id);
                     dispose();
-                    Vmainframe vMainFrame = new Vmainframe();
+                    VMainFrame vMainFrame = new VMainFrame();
                     vMainFrame.setVisible(true);
                 } else if (ctrl.IsID(id)) {
                     JOptionPane.showMessageDialog(null, "비밀번호 오류", login.WRONG_PW_MESSAGE, JOptionPane.INFORMATION_MESSAGE);
@@ -121,6 +121,5 @@ public class LoginFrame extends JFrame {
         }
     }
 
-    public void initialize() {
-    }
+    public void initialize() {}
 }

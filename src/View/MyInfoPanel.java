@@ -1,15 +1,14 @@
-package View;
+package view;
 
 import javax.swing.*;
 
-import Constant.constant.myinfo;
-import Control.Control;
-import Model.Model;
+import constant.Constants.myinfo;
+import control.Control;
+import model.Model;
 
-import java.awt.*;
 import java.util.Vector;
 
-public class MyInfo extends JPanel {
+public class MyInfoPanel extends JPanel {
 	//version
     private static final long serialVersionUID = myinfo.VERSION_NUM;
     //components
@@ -17,7 +16,7 @@ public class MyInfo extends JPanel {
     //model
     private Vector<Model> List;
     //constructor
-    public MyInfo() {
+    public MyInfoPanel() {
     	//attributes
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         //components
@@ -29,6 +28,7 @@ public class MyInfo extends JPanel {
         //method
         updateinfo();
     }
+    
     //methods
     public void setUserInfo(Vector<Model> userInfoVector) {
     	
@@ -39,19 +39,17 @@ public class MyInfo extends JPanel {
             userScoreText.append(userInfo.getstScore()).append(myinfo.SLASH);
             userScoreText.append(userInfo.getScoreLimit()).append(myinfo.BLAMK);
         }
-
         this.userNameLabel.setText(userNameText.toString());
         this.userScoreLabel.setText(userScoreText.toString());
-    }//update 
+    }
+    
+    //update 
     public void updateinfo() {
     	Control control =new Control();
     	List=control.myinfo();
     	setUserInfo(List);
     }
     //initialize
-	public void initialize() {
-		
-	}
-    
+	public void initialize() {}
 }
 

@@ -1,27 +1,22 @@
-package View;
+package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import Constant.constant.control;
-import Constant.constant.controlbt;
-import Control.Control;
-
-
+import constant.Constants.controlbt;
+import control.Control;
 
 public class VControlPanel extends JPanel {
 	//version
 	private static final long serialVersionUID = controlbt.VERSION_NUM;
 	//components
-	private JButton miri,sincheong,Delmiri,deletebt;
+	private JButton basketbt,enrollmentbt,deletebasketbt,deleteenrollbt;
 	//associate
-	private MyInfo myinfo;
-	private VlectureScrollPane select,search,basket,mylecture;
+	private MyInfoPanel myinfo;
+	private VlectureScrollPane selectpane,searchpane,basketpane,mylecturepane;
 	
 	//constructor
 	public VControlPanel() {
@@ -30,39 +25,38 @@ public class VControlPanel extends JPanel {
 		this.setLayout(layoutManager);
 		ActionHandler actionListener=new ActionHandler();
 		
-		
-		//components button 
+		//components
 		//miri
-		this.miri = new JButton(controlbt.MIRI);
-        miri.setActionCommand(controlbt.MIRI);
-        miri.addActionListener(actionListener);
-        this.add(miri);
+		this.basketbt = new JButton(controlbt.MIRI);
+        basketbt.setActionCommand(controlbt.MIRI);
+        basketbt.addActionListener(actionListener);
+        this.add(basketbt);
         //delete from miri
-        this.Delmiri = new JButton(controlbt.DELETEMIRI);
-        Delmiri.setActionCommand(controlbt.DELETEMIRI);
-        Delmiri.addActionListener(actionListener);
-        this.add(Delmiri);
+        this.deletebasketbt = new JButton(controlbt.DELETEMIRI);
+        deletebasketbt.setActionCommand(controlbt.DELETEMIRI);
+        deletebasketbt.addActionListener(actionListener);
+        this.add(deletebasketbt);
         //enrollment
-        this.sincheong  = new JButton(controlbt.SINCHEONG);
-        sincheong.setActionCommand(controlbt.SINCHEONG);
-        sincheong.addActionListener(actionListener);
-        this.add(sincheong);
+        this.enrollmentbt  = new JButton(controlbt.SINCHEONG);
+        enrollmentbt.setActionCommand(controlbt.SINCHEONG);
+        enrollmentbt.addActionListener(actionListener);
+        this.add(enrollmentbt);
         //delete
-        this.deletebt  = new JButton(controlbt.DELETE);
-        deletebt.setActionCommand(controlbt.DELETE);
-        deletebt.addActionListener(actionListener);
-        this.add(deletebt);
+        this.deleteenrollbt  = new JButton(controlbt.DELETE);
+        deleteenrollbt.setActionCommand(controlbt.DELETE);
+        deleteenrollbt.addActionListener(actionListener);
+        this.add(deleteenrollbt);
 		
 	}
 	//association
-	public void setNext(MyInfo myinfo) {
+	public void setNext(MyInfoPanel myinfo) {
 		this.myinfo=myinfo;
 	}
 	public void associate(VlectureScrollPane select, VlectureScrollPane search, VlectureScrollPane basket, VlectureScrollPane mylecture) {
-		this.select=select;
-		this.search=search;
-		this.basket=basket;
-		this.mylecture=mylecture;}
+		this.selectpane=select;
+		this.searchpane=search;
+		this.basketpane=basket;
+		this.mylecturepane=mylecture;}
 	
 	//action handler
 	private class ActionHandler implements ActionListener {
@@ -81,51 +75,43 @@ public class VControlPanel extends JPanel {
                 	Control(controlbt.DELETE);
                     break;
             }
-     
-     }
-       //methods
-    private void Control(String link) {
-    	//select id from which table
-    	int courseId0 = basket.getcourseid();
-    	int courseId1 = select.getcourseid();
-    	int courseId2 = search.getcourseid();
-    	int courseId3 = mylecture.getcourseid();
-    	int Id = courseId1+courseId0+courseId2+courseId3+3;
-    	//if selected
-    	if (Id!=-1) {
-    		Control controlFunction =new Control();	
-    		if(link==controlbt.SINCHEONG) {
-    			controlFunction.GO(Id);
-    			
-    		}else if(link==controlbt.MIRI){
-    			controlFunction.Basket(Id);
-    			
-    		}else if(link==controlbt.DELETEMIRI){
-    			controlFunction.DELBasket(Id);
-    			
-    		}else if(link==controlbt.DELETE){
-    			controlFunction.del(Id);
-    			
+        }
+        
+        	//methods
+        	private void Control(String link) {
+        		//select id from which table
+        		int courseId0 = basketpane.getcourseid();
+        		int courseId1 = selectpane.getcourseid();
+        		int courseId2 = searchpane.getcourseid();
+        		int courseId3 = mylecturepane.getcourseid();
+    		int Id = courseId1+courseId0+courseId2+courseId3+3;
+    		//if selected
+    		if (Id!=-1) {
+    			Control controlFunction =new Control();	
+    			if(link==controlbt.SINCHEONG) {
+    				controlFunction.enrollment(Id);
+    			}else if(link==controlbt.MIRI){
+    				controlFunction.basket(Id);
+    			}else if(link==controlbt.DELETEMIRI){
+    				controlFunction.deletefrombasket(Id);
+    			}else if(link==controlbt.DELETE){
+    			controlFunction.deletefromenrollment(Id);
+    			}else {}
+    			//update table
+    			if (courseId0 >= 0) {
+    				basketpane.showBasket();}	
+    			if (courseId1 >= 0) {
+    				selectpane.update();}
+    			if (courseId2 >= 0) {
+    				searchpane.update();}
+    			if (courseId3 >= 0) {
+    				mylecturepane.showMy();
+    			}
+    			//update user info
+    			myinfo.updateinfo();
     		}else {}
-    		//update table
-    		if (courseId0 >= 0) {
-    	        basket.showBasket();}	
-    		if (courseId1 >= 0) {
-    	        select.update();}
-    	    if (courseId2 >= 0) {
-    	        search.update();}
-    	    if (courseId3 >= 0) {
-    	        mylecture.showMy();
-    	    }
-    	    //update user info
-    	    myinfo.updateinfo();
-    	}
-    	
-    	else {}
 		}
-
+    }
 	//initialize
-    }public void initialize() {
-		
-	}
+	public void initialize() {}
 }

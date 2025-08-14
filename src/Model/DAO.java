@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,31 +10,39 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Scanner;
 import java.util.Vector;
-
 import javax.swing.JOptionPane;
 
-import Constant.constant.dao;
+import constant.Constants.dao;
+import constant.Constants.database;
 
-public class DAO {
+public class Dao {
     //attributes  
     private Connection con;
     private ResultSet rs;
     private PreparedStatement ps;
 
     //constructors
-    public DAO() {}
+    public Dao() {}
 
     //initialize
     public void initialize() {}
 
-    //methods 
+    // - methods
+
     //connect
     public void Connect() {
-        try {Class.forName(dao.DRIVER);
-            con = DriverManager.getConnection(dao.JDBC_URL, dao.USERNAME, dao.PASSWORD);
+        try {
+            // MySQL 드라이버 로드
+            Class.forName(database.DRIVER_PATH);
+            // 데이터베이스 연결 설정
+            con = DriverManager.getConnection(database.DRIVER_URL, database.DB_USER_ID, database.DB_PASSWORD);
         } catch (Exception e) {
-            System.out.println(dao.error + e.getMessage()); }
-    }//close
+            e.printStackTrace();
+            throw new RuntimeException("Failed to connect to the database");
+        }
+    }
+    
+    //close
     private void closeResources() {
         try {
             if (rs != null) rs.close();
@@ -44,8 +52,7 @@ public class DAO {
             e.printStackTrace();
         }
     }
-    //get	
-    
+    //get
     public Vector<Model> getLectureByLink(String link) {
     	return getCourseInfo(dao.LINK_LECTURE,link);
     }
@@ -82,11 +89,12 @@ public class DAO {
         }
         return courseList;
     }
+
     public Vector<Model> getList(String link) {
         Vector<Model> List = new Vector<Model>();
         try {
             File file = new File(dao.LOCATION + link + dao.FILETYPE);
-            Scanner scanner = new Scanner(file);
+            Scanner scanner = new Scanner(file, "UTF-8");
 
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
@@ -105,6 +113,7 @@ public class DAO {
         }
         return List;
     }
+    
     //show
     public Vector<Model> show(Integer studentId,String table) {
         Vector<Model> courseList = new Vector<>();
@@ -129,10 +138,8 @@ public class DAO {
         }return courseList;
     }
 
-
-    
     //enrollment methods
-    public void ToBasket(Integer integer, int strid) {      
+    public void toBasket(Integer integer, int strid) {
         try {
         	 Connect();
              //if exists
@@ -156,7 +163,7 @@ public class DAO {
     }
 
     //delete lecture from basket
-    public void DELBasket(Integer student, int courseid) {
+    public void delbasket(Integer student, int courseid) {
         try {
             Connect();
             //is it basket
@@ -179,7 +186,7 @@ public class DAO {
     }
 	
 	//enrollment lecture
-    public void ToEnrollment(Integer student, int courseid) {
+    public void toEnrollment(Integer student, int courseid) {
         try {
             Connect();
             //if exists
@@ -188,8 +195,8 @@ public class DAO {
                 JOptionPane.showMessageDialog(null, dao.ALREADYENROLL, dao.error, JOptionPane.ERROR_MESSAGE);
                 return;}
             //lectures limit people check
-            int limit = executeTOInt(dao.LIMIT_LECTURE, courseid);
-            int current = executeTOInt(dao.CURRENT_LECTURE, courseid);
+            int limit = executetoint(dao.LIMIT_LECTURE, courseid);
+            int current = executetoint(dao.CURRENT_LECTURE, courseid);
             if (limit <= current) {
                 JOptionPane.showMessageDialog(null, dao.PEOPLEOVER,dao.error, JOptionPane.ERROR_MESSAGE);
                 return;
@@ -203,9 +210,9 @@ public class DAO {
                 JOptionPane.showMessageDialog(null, dao.TIMEOVER, dao.error, JOptionPane.ERROR_MESSAGE);
                 return;}
             //check your score limit
-            int courseScore = executeTOInt(dao.SCORE_LECTURE, courseid);
-            int studentScore = executeTOInt(dao.getScore, student);
-            int scoreLimit = executeTOInt(dao.getScorelimit, student);
+            int courseScore = executetoint(dao.SCORE_LECTURE, courseid);
+            int studentScore = executetoint(dao.getScore, student);
+            int scoreLimit = executetoint(dao.getScorelimit, student);
             if (studentScore + courseScore > scoreLimit) {
                 JOptionPane.showMessageDialog(null, dao.SCOREOVER, dao.error, JOptionPane.ERROR_MESSAGE);
                 return;}
@@ -239,16 +246,14 @@ public class DAO {
         }
         return false;
     }
-    public boolean checkDay(String day1, String day2, String day3, String day4) {
-        
+    private boolean checkDay(String day1, String day2, String day3, String day4) {
         boolean Match1 = (day1 != null && day1.equals(day3));
         boolean Match2 = (day1 != null && day1.equals(day4));
         boolean Match3 = (day2 != null && day2.equals(day3));
         boolean Match4 = (day2 != null && day2.equals(day4));
-        
         return Match1 || Match2 || Match3 || Match4;
     }
-    public boolean checkTime(String time1, String time2) {
+    private boolean checkTime(String time1, String time2) {
         String[] parts1 = time1.split(dao.BAR);
         String[] parts2 = time2.split(dao.BAR);
         int startTime1 = Integer.parseInt(parts1[0]);
@@ -261,10 +266,9 @@ public class DAO {
         } else {
             return true;}
     }
-    
 
     //delete enrolled lecture
-    public void Delete(int studentId, int courseId) {
+    public void delete(int studentId, int courseId) {
         try {
             Connect();
             
@@ -272,7 +276,7 @@ public class DAO {
             if (executeBoolean(dao.ISENROLLMENT, studentId, courseId)) {
                 // enrollment에서 해당 항목을 찾은 경우
                 // 해당 강좌의 Score에서 강좌 score 빼기
-                int courseScore = executeTOInt(dao.SCORE_LECTURE, courseId);
+                int courseScore = executetoint(dao.SCORE_LECTURE, courseId);
                 executeUpdate(dao.SCOREDOWN, courseScore, courseScore,studentId);
                 
                 // delete from enrollment
@@ -296,13 +300,12 @@ public class DAO {
         }
     }
 
- 
     //login methods
-	public boolean IsId(int id) {
+	public boolean isId(int id) {
         return isRight(dao.ISID, id);
     }
 
-    public boolean IsPw(String pw) {
+    public boolean isPw(String pw) {
         return isRight(dao.ISPW, pw);
     }
 
@@ -318,6 +321,7 @@ public class DAO {
         }
         return result;
     }
+
     //score & name 
 	public Vector<Model> myinfo(int userId) {
 		Vector<Model> list = new Vector<Model>();
@@ -340,11 +344,12 @@ public class DAO {
         }
         return list;
     }
-
-    
 	
 	//query methods
-	private void prepareStatement(String query, Object... params) throws SQLException {
+    private void prepareStatement(String query, Object... params) throws SQLException {
+        if (con == null) {
+            throw new SQLException("Connection is not established. Call Connect() first.");
+        }
         ps = con.prepareStatement(query);
         int index = 1;
         for (Object param : params) {
@@ -355,7 +360,6 @@ public class DAO {
             }
         }
     }
-
     private int executeUpdate(String query, Object... params) throws SQLException {
         prepareStatement(query, params);
         for (int i = 0; i < params.length; i++) {
@@ -373,15 +377,15 @@ public class DAO {
         prepareStatement(query, params);
         return ps.executeQuery();
     }
-
-    private int executeTOInt(String query, Object... params) throws SQLException {
+    private int executetoint(String query, Object... params) throws SQLException {
         ResultSet resultSet = executeQuery(query, params);
         if (resultSet.next()) {
             return resultSet.getInt(1);
         } else {
             return -1;
         }
-    }private String executeToString(String query, Object... params)throws SQLException {
+    }
+    private String executeToString(String query, Object... params)throws SQLException {
         ResultSet resultSet = executeQuery(query, params);
         try {
             if (resultSet.next()) {
@@ -394,11 +398,8 @@ public class DAO {
             return null;
         }
     }
-
-
     private boolean executeBoolean(String query, Object... params) throws SQLException {
         ResultSet resultSet = executeQuery(query, params);
         return resultSet.next();
     }
-
 }

@@ -1,27 +1,20 @@
-package View;
+package view;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Vector;
 
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import Constant.constant.lecture;
-import Constant.constant.lecture.ElectureHeader;
-import Control.Control;
-import Model.Model;
+import constant.Constants.lecture;
+import constant.Constants.lecture.ElectureHeader;
+import control.Control;
+import model.Model;
 
 
 
 
-public class VlectureScrollPane extends JScrollPane implements iindexTable {
+public class VlectureScrollPane extends JScrollPane implements IindexTable {
 	//attributes
 	private static final long serialVersionUID = lecture.VERSION_NUM;
 	//components
@@ -32,8 +25,8 @@ public class VlectureScrollPane extends JScrollPane implements iindexTable {
 	private String link,keyword;
 	
 	//association
-	private iindexTable next;
-	public void setNext(iindexTable next) {this.next = next;}
+	private IindexTable next;
+	public void setNext(IindexTable next) {this.next = next;}
 
 	//constructor
 	public VlectureScrollPane() {
@@ -70,7 +63,7 @@ public class VlectureScrollPane extends JScrollPane implements iindexTable {
 		take(control.getBasket());
 		//my
 	}public void showMy() {
-		take(control.getMy());
+		take(control.getMyEnrollment());
 		//search
 	}public void showSearch(String keyword) {
 		this.keyword=keyword;

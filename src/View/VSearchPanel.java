@@ -1,23 +1,18 @@
-package View;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+package view;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import Constant.constant.search;
-import Control.Control;
+import constant.Constants.search;
 
 
-public class VSEARCH extends JPanel {
+public class VSearchPanel extends JPanel {
 	//version
 	private static final long serialVersionUID = search.VERSION_NUM;
+	
 	//components	
 	private JTextField searchField;
 	private VlectureScrollPane vsearchtable;
@@ -25,7 +20,7 @@ public class VSEARCH extends JPanel {
 	
 	private String keyword;
 	//constructor
-	public VSEARCH() {
+	public VSearchPanel() {
 		
 		//attribute
 		BoxLayout layoutManager = new BoxLayout(this, BoxLayout.Y_AXIS);

@@ -1,6 +1,5 @@
-package View;
+package view;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,22 +7,20 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-import Constant.constant.mainframe;
-import Control.Control;
+import constant.Constants.mainframe;
+import control.Control;
 
-public class Vmainframe extends JFrame {
+public class VMainFrame extends JFrame {
 	//version
 	private static final long serialVersionUID = mainframe.VERSION_NUM;
 	
 	//components	
-	private MyInfo myinfo;
-	private Vsuganagsinchung  Vsuganagsinchung;
-
+	private MyInfoPanel myinfo;
+	private VMainPanel  Vsuganagsinchung;
 
 	//constructor
-	public Vmainframe() throws HeadlessException{
+	public VMainFrame() throws HeadlessException{
 		//attribute
 		this.setTitle(mainframe.TITLE);
         this.setSize(mainframe.Width, mainframe.Height);
@@ -33,12 +30,12 @@ public class Vmainframe extends JFrame {
         ActionHandler actionListener = new ActionHandler();
         
         //components
-		this.myinfo=new MyInfo();
+		this.myinfo=new MyInfoPanel();
         this.myinfo.setPreferredSize(new Dimension(1000, 40));
         this.myinfo.setVisible(true);
     	this.add(this.myinfo);
         
-        this.Vsuganagsinchung = new Vsuganagsinchung();
+        this.Vsuganagsinchung = new VMainPanel();
         this.Vsuganagsinchung.setVisible(true);
     	this.add(this.Vsuganagsinchung);
     	

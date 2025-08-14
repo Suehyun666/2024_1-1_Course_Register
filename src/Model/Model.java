@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class Model {
 	
@@ -21,6 +21,7 @@ public class Model {
 	private int stScore;
 	
 	public Model() {}
+	
 	// get methods
 	public String getId() {
 		return id;
@@ -71,10 +72,6 @@ public class Model {
 		return stScore;
 	}
 	
-	
-	
-	
-	
 	// set methods
 	public void setId(String id) {
 		this.id = id;
@@ -124,6 +121,5 @@ public class Model {
 	public void setstScore(int stScore) {
 		this.stScore = stScore;
 	}
-	
 	
 }

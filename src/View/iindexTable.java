@@ -1,5 +1,5 @@
-package View;
+package view;
 
-public interface iindexTable {
+public interface IindexTable {
 	public void show(String link);
 }

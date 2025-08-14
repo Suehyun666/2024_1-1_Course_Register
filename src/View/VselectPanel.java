@@ -1,15 +1,13 @@
-package View;
+package view;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
-import Constant.constant.select;
+import constant.Constants.select;
 
 import java.awt.LayoutManager;
-import java.util.Vector;
 
-public class VselectPanel extends JPanel{
+public class VSelectPanel extends JPanel{
 	//version
 	private static final long serialVersionUID = select.VERSION_NUM;
 	
@@ -18,7 +16,7 @@ public class VselectPanel extends JPanel{
 	private VlectureScrollPane vlectureTable;
 	
 	//constructor
-	public VselectPanel() {
+	public VSelectPanel() {
 		//attributes
 		LayoutManager layoutManager = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(layoutManager);

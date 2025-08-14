@@ -1,4 +1,4 @@
-package View;
+package view;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,22 +6,24 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import Constant.constant.sugang;
+import constant.Constants.sugang;
 
 
-public class Vsuganagsinchung extends JPanel {
+public class VMainPanel extends JPanel {
 	//version
     private static final long serialVersionUID = sugang.VERSION_NUM;
+
     //components
 	private JPanel menupanel;
-    private VselectPanel  Vselectpanel;
-	private VSEARCH vsearchpanel;
-	private VMIRI vMiridamgiPanel;
+    private VSelectPanel  Vselectpanel;
+	private VSearchPanel vsearchpanel;
+	private VBasketPanel vBasketpanel;
 	private VControlPanel vcontrolpanel;
-	private Vsincheong vSincheongpanel;
+	private VEnrollment vEnrollmentpanel;
 	private JButton showbasket,showselect,showsearch,showmy;
+    
 	//constructor
-    public Vsuganagsinchung() {
+    public VMainPanel() {
     	//attributes
     	ActionHandler actionListener = new ActionHandler();
     	LayoutManager layoutManager = new BoxLayout(this, BoxLayout.Y_AXIS);
@@ -33,21 +35,21 @@ public class Vsuganagsinchung extends JPanel {
 		this.menupanel.setVisible(true);
         this.add(this.menupanel);    
         //miri
-        this.vMiridamgiPanel=new VMIRI();
-        this.vMiridamgiPanel.setVisible(false);
-		this.add(this.vMiridamgiPanel);
+        this.vBasketpanel=new VBasketPanel();
+        this.vBasketpanel.setVisible(false);
+		this.add(this.vBasketpanel);
         //select
-    	this.Vselectpanel = new VselectPanel(); 
+    	this.Vselectpanel = new VSelectPanel(); 
         this.Vselectpanel.setVisible(false);
     	this.add(this.Vselectpanel);
         //search
-        this.vsearchpanel = new VSEARCH();
+        this.vsearchpanel = new VSearchPanel();
         this.vsearchpanel.setVisible(false);
         this.add(this.vsearchpanel); 
         //sincheong(my lecture)
-        this.vSincheongpanel=new Vsincheong();
-        this.vSincheongpanel.setVisible(false);
-		this.add(this.vSincheongpanel);
+        this.vEnrollmentpanel=new VEnrollment();
+        this.vEnrollmentpanel.setVisible(false);
+		this.add(this.vEnrollmentpanel);
         //control panel
         this.vcontrolpanel=new VControlPanel();
         this.vcontrolpanel.setVisible(false);
@@ -78,7 +80,7 @@ public class Vsuganagsinchung extends JPanel {
         
         
         //association
-        this.vcontrolpanel.associate(this.Vselectpanel.getLectureTable(),this.vsearchpanel.getLectureTable(),this.vMiridamgiPanel.getLectureTable(),this.vSincheongpanel.getLectureTable());
+        this.vcontrolpanel.associate(this.Vselectpanel.getLectureTable(),this.vsearchpanel.getLectureTable(),this.vBasketpanel.getLectureTable(),this.vEnrollmentpanel.getLectureTable());
     }
     
     //action handler (show panel menu)
@@ -86,7 +88,7 @@ public class Vsuganagsinchung extends JPanel {
         public void actionPerformed(ActionEvent e) {
             switch (e.getActionCommand()) {
             	case sugang.SHOWBASKET:
-            		showPanel(vMiridamgiPanel);
+            		showPanel(vBasketpanel);
                 	break;
                 case sugang.SHOWSEARCH:
                     showPanel(vsearchpanel);
@@ -95,7 +97,7 @@ public class Vsuganagsinchung extends JPanel {
                     showPanel(Vselectpanel);
                     break;
                 case sugang.SHOWMY:
-                	showPanel(vSincheongpanel);
+                	showPanel(vEnrollmentpanel);
                 	break;}
      }
 
@@ -104,8 +106,8 @@ public class Vsuganagsinchung extends JPanel {
     	initialize();
     	Vselectpanel.setVisible(false);
     	vsearchpanel.setVisible(false);
-    	vMiridamgiPanel.setVisible(false);
-    	vSincheongpanel.setVisible(false);
+    	vBasketpanel.setVisible(false);
+    	vEnrollmentpanel.setVisible(false);
         panel.setVisible(true); 
         vcontrolpanel.setVisible(true);
        }
@@ -115,7 +117,7 @@ public class Vsuganagsinchung extends JPanel {
         
     }
     //association
-	public void setNext(MyInfo myinfo) {
+	public void setNext(MyInfoPanel myinfo) {
 		this.vcontrolpanel.setNext(myinfo);
 		
 	}
@@ -124,7 +126,7 @@ public class Vsuganagsinchung extends JPanel {
     public void initialize() {
     	this.Vselectpanel.initialize();      
     	this.vsearchpanel.initialize();
-    	this.vMiridamgiPanel.initialize();
-    	this.vSincheongpanel.initialize();
+    	this.vBasketpanel.initialize();
+    	this.vEnrollmentpanel.initialize();
     }
 }

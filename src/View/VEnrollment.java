@@ -1,27 +1,18 @@
-package View;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Vector;
+package view;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import Constant.constant.miri;
-import Constant.constant.controlbt;
-import Constant.constant.my;
-import Control.Control;
-import Model.Model;
+import constant.Constants.my;
 
 
-public class Vsincheong extends JPanel {
+public class VEnrollment extends JPanel {
 	//version
 	private static final long serialVersionUID = my.VERSION_NUM;
 	//components	
 	private VlectureScrollPane vsincheong;
 	//constructor
-	public Vsincheong() {
+	public VEnrollment() {
 		//attribute
 		BoxLayout layoutManager = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(layoutManager);
@@ -29,8 +20,7 @@ public class Vsincheong extends JPanel {
 		//components
 		this.vsincheong=new VlectureScrollPane();
 		this.add(vsincheong);
-		}
-	
+	}
 	
 	//initialize
 	public void initialize() {
@@ -41,7 +31,6 @@ public class Vsincheong extends JPanel {
 	public VlectureScrollPane getLectureTable() {
 		return vsincheong;
 	}
-	
 	
 }
 
