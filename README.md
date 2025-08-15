@@ -35,6 +35,7 @@
 ```
 📦 CourseRegistration
 ┣ 📂 src                     # 소스 코드
+┃  ┣ 📂 constants           # 상수
 ┃  ┣ 📂 controller          # 비즈니스 로직 및 이벤트 처리
 ┃  ┣ 📂 model               # 데이터 모델 및 DAO (Data Access Object)
 ┃  ┗ 📂 view                # 사용자 인터페이스 (Java Swing)
@@ -137,11 +138,11 @@
 
 ## 🏛️ 아키텍처 개요
 
-이 프로그램은 **MVC(Model-View-Controller) 패턴**을 기반으로 설계되었습니다.
+이 프로그램은 **MVC(model-View-Controller) 패턴**을 기반으로 설계되었습니다.
 
-- **Model**: 강좌, 학생, 수강신청 등 핵심 데이터를 관리하고, 데이터베이스와의 상호작용(DAO)을 담당합니다.
+- **model**: 강좌, 학생, 수강신청 등 핵심 데이터를 관리하고, 데이터베이스와의 상호작용(DAO)을 담당합니다.
 
-- **View**: Java Swing을 사용하여 사용자에게 보이는 GUI 요소를 담당하며, Model의 데이터를 시각적으로 표현합니다.
+- **view**: Java Swing을 사용하여 사용자에게 보이는 GUI 요소를 담당하며, Model의 데이터를 시각적으로 표현합니다.
 
 - **Controller**: View에서 발생하는 사용자 이벤트를 처리하고, Model을 업데이트하거나 View를 갱신하도록 지시합니다.
 
