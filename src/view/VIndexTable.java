@@ -7,77 +7,75 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-import constant.Constants.indexTable.EHeader;
-import constant.Constants.indextable;
+import contants.Constant.indexTable;
+import contants.Constant.indexTable.EHeader;
+import contants.Constant.lecture.ElectureHeader;
 import control.Control;
 import model.Model;
 
 
-public class VIndexTable extends JScrollPane implements IindexTable {
-	//version
-	private static final long serialVersionUID = indextable.VERSION_NUM;
+public class VIndexTable extends JScrollPane implements IindexTable{
+	private static final long serialVersionUID = 1L;
 	
-	//components
+	// components
 	private JTable table;
 	private DefaultTableModel model;
 	private Vector<Model> List;
-	
-	//association
 	private IindexTable next;
-	public void setNext(IindexTable next) {this.next = next;}
 	
-	//constructor
 	public VIndexTable() {
-		//components
-		//table
+		// attributes
 		this.table = new JTable();
 		this.setViewportView(this.table);
-		//model
-		String[] header = {EHeader.EID.getTitle(), EHeader.ETITLE.getTitle()};
+		
+		String[] header = { EHeader.EID.getTitle(), EHeader.ETITLE.getTitle()};
 		this.model = new DefaultTableModel(null, header);
-		this.table.setModel(model);
-		//attributes
-        MouseHandler mousehandler =new MouseHandler();
+		
+		MouseHandler mousehandler =new MouseHandler();
         this.table.addMouseListener(mousehandler);
+		
+		// associate
+		this.table.setModel(model);
 	}
 	
-	//methods	
+	// initialize
+	public void initialize() {}
+	
+	// associate
+	public void setNext(IindexTable next) {this.next = next;}
+	
+	// methods
 	public void show(String link) {
 		Control cIndex = new Control();
 		List = cIndex.getList(link);
 		this.model.setRowCount(0);
-		if (List != null && !List.isEmpty()) {
-        	for (Model mCampus: List) {
-        	    String[] colums = new String[3];
-        	    colums[0] = String.valueOf(mCampus.getId());
-        	    colums[1] = mCampus.getName();
-        	    colums[2] = mCampus.getLink();
-        	    this.model.addRow(colums);
-        	}
-        	// Only call showNext if the list has elements
-        	this.showNext(0);
-    	} else {
-        	// Handle the case where the list is empty (e.g., clear the table)
-        	this.model.setRowCount(0);
-    	}
+		for (Model mCampus: List) {
+			String[] colums = new String[2];
+			colums[0] = String.valueOf(mCampus.getId());
+			colums[1] = mCampus.getName();
+			this.model.addRow(colums);		
+		}
+		this.showNext(0);
 	}
 	
 	private void showNext(int row) {
 		if(this.next != null) {
-			this.next.show(List.get(row).getLink());}
+			this.next.show(List.get(row).getLink());	
+		}	
 	}
-	
-	//mouse handler
-	private class MouseHandler implements MouseListener {
+
+	private class MouseHandler implements MouseListener {	
 		@Override
 		public void mouseClicked(MouseEvent e) {
-		int row = table.getSelectedRow();
-		if (row>=0) {showNext(row);	}}
+			int row = table.getSelectedRow();
+			if (row>=0) {
+				showNext(row);	
+			}	
+		}
+		@Override
 		public void mousePressed(MouseEvent e) {}
 		public void mouseReleased(MouseEvent e) {}
 		public void mouseEntered(MouseEvent e) {}
 		public void mouseExited(MouseEvent e) {}
 	}
-	//initialize
-	public void initialize() {}
 }

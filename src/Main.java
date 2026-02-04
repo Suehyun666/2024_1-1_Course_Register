@@ -1,24 +1,25 @@
-import view.LoginFrame;
+import view.Vmainframe;
 
 public class Main {
+	
 	//components 
-	private LoginFrame loginframe;
+	private Vmainframe Vmainframe;
 	
 	//constructors
 	public Main() {
-		this.loginframe=new LoginFrame();
-		this.loginframe.setVisible(true);
-	}
-	
-	//main
-	public static void main(String[] args) {
-		Main main =new Main();
-		main.initialize();
+		this.Vmainframe =new Vmainframe();
+		this.Vmainframe.setVisible(true);
 	}
 	
 	//initialize
-	private void initialize() {
-		this.loginframe.initialize();
+	public void initialize() {
+		this.Vmainframe.initialize();
 	}
-
+	
+	//methods 
+	public static void main(String[] args) {
+		Main main =new Main();
+		main.initialize();		
+	}
+	
 }
