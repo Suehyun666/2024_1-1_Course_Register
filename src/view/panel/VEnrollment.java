@@ -1,16 +1,16 @@
-package view;
+package view.panel;
+
+import view.VlectureScrollPane;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import constant.Constants.my;
-
-
 public class VEnrollment extends JPanel {
-	//version
-	private static final long serialVersionUID = my.VERSION_NUM;
+	private static final long serialVersionUID = 1L;
+
 	//components	
 	private VlectureScrollPane vsincheong;
+
 	//constructor
 	public VEnrollment() {
 		//attribute
@@ -27,6 +27,7 @@ public class VEnrollment extends JPanel {
 		this.vsincheong.initialize();
 		this.vsincheong.showMy();
 	}
+
 	//methods
 	public VlectureScrollPane getLectureTable() {
 		return vsincheong;

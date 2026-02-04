@@ -12,13 +12,6 @@ public class Main {
 	
 	//main
 	public static void main(String[] args) {
-		Main main =new Main();
-		main.initialize();
+		new Main();
 	}
-	
-	//initialize
-	private void initialize() {
-		this.loginframe.initialize();
-	}
-
 }

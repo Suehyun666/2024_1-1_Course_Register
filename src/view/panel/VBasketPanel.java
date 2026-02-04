@@ -1,18 +1,18 @@
-package view;
+package view.panel;
+
+import view.VlectureScrollPane;
 
 import java.awt.LayoutManager;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
-import constant.Constants.miri;
-
-
 public class VBasketPanel extends JPanel {
-	//version
-	private static final long serialVersionUID = miri.VERSION_NUM;
+	private static final long serialVersionUID = 1L;
+
 	//components
 	private VlectureScrollPane vBasketScrollpane;
+
 	//constructor
 	public VBasketPanel() {
 		//attribute
@@ -26,7 +26,7 @@ public class VBasketPanel extends JPanel {
 	
 	//methods
 	public VlectureScrollPane getLectureTable() {return vBasketScrollpane;}
-	public void run() {}
+
 	//initialize
 	public void initialize() {
 		this.vBasketScrollpane.initialize();

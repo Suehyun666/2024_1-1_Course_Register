@@ -1,4 +1,6 @@
-package view;
+package view.panel;
+
+import view.VlectureScrollPane;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -6,12 +8,9 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import constant.Constants.search;
-
-
 public class VSearchPanel extends JPanel {
 	//version
-	private static final long serialVersionUID = search.VERSION_NUM;
+	private static final long serialVersionUID = 1L;
 	
 	//components	
 	private JTextField searchField;
@@ -43,6 +42,7 @@ public class VSearchPanel extends JPanel {
 	public VlectureScrollPane getLectureTable() {
 		return vsearchtable;
 	}
+
 	//searching methods
 	public void search() {
 		//this.model.setcountrow(0)
@@ -52,6 +52,7 @@ public class VSearchPanel extends JPanel {
         this.vsearchtable.showSearch(keyword);
         
 	}
+
 	//listener
 	private class SearchFieldListener implements DocumentListener {
         @Override
@@ -66,9 +67,9 @@ public class VSearchPanel extends JPanel {
         @Override
         public void changedUpdate(DocumentEvent e) {
             search();}
+    }
 
-		
-    }//initialize
+	//initialize
     public void initialize() {
 		this.vsearchtable.initialize();
 	}

@@ -1,15 +1,13 @@
-package view;
+package view.panel;
+
+import view.VlectureScrollPane;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-
-import constant.Constants.select;
-
 import java.awt.LayoutManager;
 
 public class VSelectPanel extends JPanel{
-	//version
-	private static final long serialVersionUID = select.VERSION_NUM;
+	private static final long serialVersionUID = 1L;
 	
 	//components
 	private VindexPanel vindexpanel;
@@ -23,18 +21,20 @@ public class VSelectPanel extends JPanel{
 		//components
 		this.vindexpanel = new VindexPanel();
 		this.add(this.vindexpanel);
-		
+
 		this.vlectureTable = new VlectureScrollPane();
 		this.add(this.vlectureTable);
-		
+
 		//associate
 		this.vindexpanel.associate(this.vlectureTable);
+	}
 
 	//methods
-	}public VlectureScrollPane getLectureTable() {
+	public VlectureScrollPane getLectureTable() {
 		return vlectureTable;
-		
-	}//initialize
+	}
+
+	//initialize
 	public void initialize() {
 		this.vindexpanel.initialize();
 		this.vlectureTable.initialize();

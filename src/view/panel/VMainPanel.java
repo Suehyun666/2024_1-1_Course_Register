@@ -1,4 +1,4 @@
-package view;
+package view.panel;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +11,7 @@ import constant.Constants.sugang;
 
 public class VMainPanel extends JPanel {
 	//version
-    private static final long serialVersionUID = sugang.VERSION_NUM;
+    private static final long serialVersionUID = 1L;
 
     //components
 	private JPanel menupanel;
@@ -116,11 +116,9 @@ public class VMainPanel extends JPanel {
     public void run() {
         
     }
-    //association
-	public void setNext(MyInfoPanel myinfo) {
-		this.vcontrolpanel.setNext(myinfo);
-		
-	}
+    public void setInfoPanel(MyInfoPanel myinfo) {
+        this.vcontrolpanel.setInfoPanel(myinfo);
+    }
 	
 	//initialize
     public void initialize() {

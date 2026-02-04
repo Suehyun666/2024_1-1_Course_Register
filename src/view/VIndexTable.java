@@ -1,4 +1,5 @@
 package view;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Vector;
@@ -8,19 +9,18 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import constant.Constants.indexTable.EHeader;
-import constant.Constants.indextable;
-import control.Control;
-import model.Model;
+import controller.LectureController;
+import model.IndexItem;
 
 
 public class VIndexTable extends JScrollPane implements IindexTable {
-	//version
-	private static final long serialVersionUID = indextable.VERSION_NUM;
+	private static final long serialVersionUID = 1L;
 	
 	//components
 	private JTable table;
 	private DefaultTableModel model;
-	private Vector<Model> List;
+	private Vector<IndexItem> items;
+    private LectureController lectureController;
 	
 	//association
 	private IindexTable next;
@@ -29,42 +29,38 @@ public class VIndexTable extends JScrollPane implements IindexTable {
 	//constructor
 	public VIndexTable() {
 		//components
-		//table
 		this.table = new JTable();
 		this.setViewportView(this.table);
-		//model
+
 		String[] header = {EHeader.EID.getTitle(), EHeader.ETITLE.getTitle()};
 		this.model = new DefaultTableModel(null, header);
 		this.table.setModel(model);
-		//attributes
+        this.lectureController = new LectureController();
+
         MouseHandler mousehandler =new MouseHandler();
         this.table.addMouseListener(mousehandler);
 	}
 	
 	//methods	
 	public void show(String link) {
-		Control cIndex = new Control();
-		List = cIndex.getList(link);
+		items = lectureController.getDirectories(link);
 		this.model.setRowCount(0);
-		if (List != null && !List.isEmpty()) {
-        	for (Model mCampus: List) {
-        	    String[] colums = new String[3];
-        	    colums[0] = String.valueOf(mCampus.getId());
-        	    colums[1] = mCampus.getName();
-        	    colums[2] = mCampus.getLink();
-        	    this.model.addRow(colums);
+		if (items != null && !items.isEmpty()) {
+        	for (IndexItem item: items) {
+        	    String[] columns = new String[3];
+        	    columns[0] = item.getId();
+        	    columns[1] = item.getName();
+        	    this.model.addRow(columns);
         	}
-        	// Only call showNext if the list has elements
         	this.showNext(0);
     	} else {
-        	// Handle the case where the list is empty (e.g., clear the table)
         	this.model.setRowCount(0);
     	}
 	}
 	
 	private void showNext(int row) {
-		if(this.next != null) {
-			this.next.show(List.get(row).getLink());}
+		if(this.next != null && items != null && row < items.size()) {
+			this.next.show(items.get(row).getLink());}
 	}
 	
 	//mouse handler
@@ -78,6 +74,7 @@ public class VIndexTable extends JScrollPane implements IindexTable {
 		public void mouseEntered(MouseEvent e) {}
 		public void mouseExited(MouseEvent e) {}
 	}
+
 	//initialize
 	public void initialize() {}
 }

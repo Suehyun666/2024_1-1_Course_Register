@@ -1,14 +1,15 @@
-package view;
+package view.panel;
 
 import javax.swing.JPanel;
 import javax.swing.*;
 import java.awt.*;
 
 import constant.Constants.indexpanel;
+import view.VIndexTable;
+import view.VlectureScrollPane;
 
 public class VindexPanel extends JPanel{
-	//version
-	private static final long serialVersionUID = indexpanel.VERSION_NUM;
+	private static final long serialVersionUID = 1L;
 	
 	//components
 	private VIndexTable vCampus;

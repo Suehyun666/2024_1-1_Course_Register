@@ -1,77 +1,56 @@
 package view;
+
 import java.awt.Dimension;
-import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import constant.Constants.mainframe;
-import control.Control;
+import controller.MainController;
+import view.panel.MyInfoPanel;
+import view.panel.VMainPanel;
 
 public class VMainFrame extends JFrame {
-	//version
-	private static final long serialVersionUID = mainframe.VERSION_NUM;
-	
-	//components	
-	private MyInfoPanel myinfo;
-	private VMainPanel  Vsuganagsinchung;
+    private static final long serialVersionUID = 1L;
 
-	//constructor
-	public VMainFrame() throws HeadlessException{
-		//attribute
-		this.setTitle(mainframe.TITLE);
+    private MainController controller;
+
+    private MyInfoPanel myinfo;
+    private VMainPanel mainPanel;
+
+    public VMainFrame() {
+        this.controller = new MainController(this);
+
+        this.setTitle(mainframe.TITLE);
         this.setSize(mainframe.Width, mainframe.Height);
         this.setLocation(mainframe.x, mainframe.y);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        ActionHandler actionListener = new ActionHandler();
-        
-        //components
-		this.myinfo=new MyInfoPanel();
+
+        this.myinfo = new MyInfoPanel();
         this.myinfo.setPreferredSize(new Dimension(1000, 40));
         this.myinfo.setVisible(true);
-    	this.add(this.myinfo);
-        
-        this.Vsuganagsinchung = new VMainPanel();
-        this.Vsuganagsinchung.setVisible(true);
-    	this.add(this.Vsuganagsinchung);
-    	
-		//button
-    	JButton logoutbt = new JButton(mainframe.LOGOUT);
-        logoutbt.setActionCommand(mainframe.LOGOUT);
-        logoutbt.addActionListener(actionListener);
-        this.myinfo.add(logoutbt);
-        
-        //associate
-        this.Vsuganagsinchung.setNext(this.myinfo);
-        
-        
-    //action event 
-	}private class ActionHandler implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-            switch (e.getActionCommand()) {
-                case mainframe.LOGOUT:
-                	logout();
-                    break;
-            	}
-        	}
-        //methods
-		private void logout() {
-			dispose();
-        	Control control =new Control();
-        	control.clearUserId();
-            LoginFrame log =new LoginFrame();
-            log.setVisible(true);
-			
-		}
-	
-	
-	}//initialize
-	public void initialize() {
-		this.Vsuganagsinchung.initialize();
-		this.myinfo.initialize();
-	}
+        this.add(this.myinfo);
+
+        this.mainPanel = new VMainPanel();
+        this.mainPanel.setVisible(true);
+        this.add(this.mainPanel);
+
+        JButton logoutBtn = new JButton(mainframe.LOGOUT);
+        logoutBtn.addActionListener(e -> controller.logout());
+        this.myinfo.add(logoutBtn);
+
+        this.mainPanel.setInfoPanel(this.myinfo);
+    }
+
+    public void showError(String msg) {
+        JOptionPane.showMessageDialog(this, msg, constant.Constants.DialogTitle.ERROR, JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void showLoginFrame() {
+        dispose();
+        new LoginFrame().setVisible(true);
+    }
 }
